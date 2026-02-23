@@ -13,6 +13,9 @@ cargo install --path wallet --force
 ```
 
 # 1. Run the sequencer
+
+// env setup should be somewhere else. a running chain and services should be a prerequisite for deployment and shouldnt live in this readme
+
 From the project’s root directory, start the sequencer:
 ```bash
 cd sequencer_runner
@@ -23,18 +26,17 @@ Keep this terminal open. We’ll use it only to observe the node logs.
 > [!NOTE]
 > If you have already ran this before you'll see a `rocksdb` directory with stored blocks. Be sure to remove that directory to follow this tutorial.
 
+// also, this only mentions the sequencer- no indexer, no node, or anything else - isn't this partial setup which will not work?
 
-## Checking and setting up the wallet
-For sanity let's check that the wallet can connect to it.
+## Wallet <> Chain Connection
 
-```bash
-wallet check-health
-```
+The command `wallet check-health` can be used to check the connection between the chain and the wallet. 
 
-If this is your first time, the wallet will ask for a password. This is used as seed to deterministically generate all account keys (public and private).
+If you have not set up the wallet before, you will be prompted for a master password. This is used as seed to deterministically generate all account keys (public and private).
 For this tutorial, use: `program-tutorial`
 
 You should see `✅All looks good!` if everything went well.
+// why does check-health initialize the wallet? this should be a different command.
 
 # 2. Compile the example programs
 In a second terminal, from the `lssa` root directory, compile the example Risc0 programs:
@@ -240,7 +242,7 @@ let tx = PublicTransaction::new(message, witness_set);
 
 A public transaction consists of:
 - a `Message`
-- a corresponding `WitnessSet`
+- a corresponding `WitnessSet` - what's this exactly?
 
 For this simple example, no signing or nonces are required. The transaction includes only the program ID, the target account, and the instruction bytes. The Hello World program allows this because it does not explicitly require authorization. In the next example, we’ll see how authorization requirements are enforced and how to construct a transaction that includes signatures and nonces.
 
